@@ -1,0 +1,16 @@
+body {
+	text-align: center;
+	color: red;
+}
+
+li {
+	list-style: none;
+}
+
+div {
+	text-align: center;
+}
+
+body.a {
+	text-align: left;
+}
