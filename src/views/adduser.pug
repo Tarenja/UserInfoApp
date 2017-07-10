@@ -1,0 +1,15 @@
+extends layout
+
+block content
+		h1 Add User Form
+		br 
+		div
+			form(method='POST' action='/addusers')
+				p First Name
+				input(type="text", name="firstname", placeholder="firstname")
+				p Last Name
+				input(type="text", name="lastname", placeholder="lastname")
+				p Email Address
+				input(type="text", name="email", placeholder="email")
+				br
+				button.btn.btn-primary(type='submit') Add User

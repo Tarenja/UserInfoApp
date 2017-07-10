@@ -6,14 +6,9 @@ block content
 	br
 	h3 Search for Users by first name or last name
 	br
-	h4 This is case sensitive, so use a capital first letter!
+	h4 This is case sensitive!
 	br 
 	div
 		form(method='POST' action='/searchresult')
 			input(type="text", name="name", placeholder="name")
 			button.btn.btn-primary(type='submit') Search
-	br
-	br
-	br
-	a(href="/users", class='user') All Users 
-			

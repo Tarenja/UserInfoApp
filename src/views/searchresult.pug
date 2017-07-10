@@ -1,4 +1,11 @@
 extends layout
 
 block content
-	h1 #{match}
+
+	if match === undefined
+		h3 No Matches Found!
+	else
+		h3 I Found You! 
+		p= 'Name: ' + match.firstname + ' ' + match.lastname
+		p= 'Email: ' + match.email
+

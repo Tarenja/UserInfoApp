@@ -7,10 +7,16 @@ li {
 	list-style: none;
 }
 
+ul {
+	text-align: center;
+}
+
 div {
 	text-align: center;
 }
 
-body.a {
-	text-align: left;
+a.button {
+	font-size: 15pt;
+	color: rgb(74, 144, 219);
+	text-decoration-style: none;
 }
