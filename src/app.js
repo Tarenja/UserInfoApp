@@ -78,7 +78,7 @@ app.post('/searchresult', function (req,res){
 	// console.log(req.body);
 	var name = req.body.name;
 	var autoName = req.body.autoname;
-	var autoUser = []
+	var autoUser = [];
 
 	fs.readFile("../users.json", 'utf8', function (err, data) {		
 		if (err) {
