@@ -17,7 +17,24 @@
 // Part 2
 // Create two more routes:
 // - route 4: renders a page with three forms on it (first name, last name, and email) that allows you to add new users to the users.json file.
-// - route 5: takes in the post request from the 'create user' form, then adds the user to the users.json file. Once that is complete, redirects to the route that displays all your users (from part 0).
+// - route 5: takes in the post request from the 'create user' form, t
+
+// User Information App - AJAX Server
+
+// Remember you are only allowed to call  "response.send" once per request!
+
+// Part 1: Autocomplete
+// Modify your form so that every time the user enters a key, it makes an AJAX call that populates the search results.
+// Do this work in a git branch called "autocomplete". Then, merge this branch into master with a pull request.
+
+// Part 2: Bandwidth optimization
+// Modify your form again so that AJAX requests happen at most once every 300 milliseconds.
+// Do this work in a git branch called "bandwidth-optimization". Then, merge this branch into master with a pull request.
+
+// Hints:
+
+// Use https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now (Links to an external site.)Links to an external site. (Links to an external site.)Links to an external site.
+// Test it by opening the Network tab in Chrome's Developer Tools by checking that fewer requests are going off.
 
 //loading in all the required modules for the app to work
 const express = require('express');
@@ -56,9 +73,12 @@ app.get('/users', function (req, res) {
 
 //post request for a search result on the homepage, this will compare the entered name against the names
 //in the json file of users
+//updated: also includes the processing of the autocomplete results in search bar
 app.post('/searchresult', function (req,res){
-	console.log(req.body)
-	var name = req.body.name
+	// console.log(req.body);
+	var name = req.body.name;
+	var autoName = req.body.autoname;
+	var autoUser = []
 
 	fs.readFile("../users.json", 'utf8', function (err, data) {		
 		if (err) {
@@ -66,12 +86,21 @@ app.post('/searchresult', function (req,res){
 		} 
 		var obj = JSON.parse(data);
 
-		for (var i=0; i<obj.length; i++) {
-			if ((name === obj[i].firstname) || (name === obj[i].lastname)) {
-				var result = obj[i];
-			} 
+		if (name) {
+			for (var i=0; i<obj.length; i++) {
+				if ((name === obj[i].firstname) || (name === obj[i].lastname)) {
+					var result = obj[i];
+				} 
+			}; res.render('searchresult', {match: result}) 
+		} else {
+			for (var i=0; i<obj.length; i++) {
+				var include = obj[i].firstname.includes(autoName);
+				var include2 = obj[i].lastname.includes(autoName)
+				if (include === true) {
+					var autoUser = obj[i];
+				};
+			}; res.send({complete: autoUser});
 		};
-		res.render('searchresult', {match: result}) 	
 	});
 });
 

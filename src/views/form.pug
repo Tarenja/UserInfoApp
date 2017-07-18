@@ -10,5 +10,24 @@ block content
 	br 
 	div
 		form(method='POST' action='/searchresult')
-			input(type="text", name="name", placeholder="name")
-			button.btn.btn-primary(type='submit') Search
+			input(class='auto' type="text", name="name", placeholder="first or last name")
+			button.btn(type='submit') Search
+	div.autoresult
+
+	script.
+		//first I need to set it so that on each keyup in the form above a call is sent to compare if there is a name that has that letter (combination). 
+		//On each keyup it needs to send a request to the app.js to compare to the names in the JSON file, 
+		//which then needs to send the response back to the pug here to display or not in the div.autoresult which is currently empty
+		$( document ).ready(function() {
+			$('.auto').keyup(function () {
+				var letters = {'autoname': $('.auto').val()};
+				$.post('/searchresult', letters, function(res) {
+					if (res.complete === undefined) {
+						$('.autoresult').html('No users found!');
+						} else {
+							$('.autoresult').html(res.complete.firstname + ' ' + res.complete.lastname);
+						}
+				});
+
+			});
+		});
