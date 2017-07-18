@@ -97,7 +97,7 @@ app.post('/searchresult', function (req,res){
 				var include = obj[i].firstname.includes(autoName);
 				var include2 = obj[i].lastname.includes(autoName)
 				if (include === true) {
-					var autoUser = obj[i];
+					autoUser.push(obj[i]);
 				};
 			}; res.send({complete: autoUser});
 		};
