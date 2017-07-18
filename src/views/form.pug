@@ -7,6 +7,7 @@ block content
 	h3 Search for Users by first name or last name
 	br
 	h4 This is case sensitive!
+	p If you enter a full first or last name you can click submit and view the full details of that user
 	br 
 	div
 		form(method='POST' action='/searchresult')
@@ -30,16 +31,17 @@ block content
 				$.post('/searchresult', letters, function(res) {
 					//- console.log(res.complete);
 						if (res.complete === undefined) {
-							$('.autoresult').text('No users found!');
+							$('.autoresult').html('No users found!');
 						} else {
 							var completeName = res.complete;
+							var names = "";
 							for (var i=0; i<completeName.length; i++) {
-								var names = "";
-								names = names += completeName[i].firstname;
+								names = names += ('<br>' + completeName[i].firstname + " " + completeName[i].lastname);
 								console.log(names);
-								$('.autoresult').text(names);
+								$('.autoresult').html('<li>'+names+'</li>');
 							};
 						};
+
 				});
 			});
 		});

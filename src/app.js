@@ -96,9 +96,11 @@ app.post('/searchresult', function (req,res){
 			for (var i=0; i<obj.length; i++) {
 				var include = obj[i].firstname.includes(autoName);
 				var include2 = obj[i].lastname.includes(autoName)
-				if (include === true) {
+				if ((include === true) || (include2 === true)) {
 					autoUser.push(obj[i]);
-				};
+				} else {
+					
+				}
 			}; res.send({complete: autoUser});
 		};
 	});
