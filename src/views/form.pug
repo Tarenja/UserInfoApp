@@ -16,8 +16,8 @@ block content
 	br
 	br
 	br
-	ul.autoresult
-		li Start typing to search for users!
+	div.autoresult
+		p Start typing to search for users!
 			
 	script.
 		//first I need to set it so that on each keyup in the form above a call is sent to compare if there is a name that has that letter (combination). 
@@ -25,21 +25,27 @@ block content
 		//which then needs to send the response back to the pug here to display or not in the div.autoresult which is currently empty
 		$( document ).ready(function() {
 			$('.auto').keyup(function () {
-				var letters = {autoname: $('.auto').val()};
-				$.post('/searchresult', letters, function(res) {
-					console.log(res.complete);
-					if (res.complete.length === 0) {
-						$('.autoresult').html("<li> No users found!</li>");
-					} else {
-						var completeName = res.complete;
-						var names = "";
-						for (var i=0; i<completeName.length; i++) {
-							names = names += ('<br>' + completeName[i].firstname + " " + completeName[i].lastname);
-							//- console.log(names);
-							$('.autoresult').html('<li>'+names+'</li>');
+				var startTime = Date.now();
+				console.log(startTime);
+				setTimeout(function(){
+					if (startTime+300) {
+						var letters = {autoname: $('.auto').val()};
+						console.log(Date.now());
+						$.post('/searchresult', letters, function(res) {
+							if (res.complete.length === 0) {
+								$('.autoresult').html("<p> No users found!</p>");
+							} else {
+								var completeName = res.complete;
+								var names = "";
+								for (var i=0; i<completeName.length; i++) {
+									names = names += ('<br>' + completeName[i].firstname + " " + completeName[i].lastname);
+									$('.autoresult').html('<p>'+names+'</p>');
+									};
 							};
-					};
-
-				});
+						}); 
+					}
+				},300)	
 			});
-		});
+		});	
+		
+	
