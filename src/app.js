@@ -102,8 +102,8 @@ app.post('/searchresult', function (req,res){
 					if ((include === true) || (include2 === true)) {
 						autoUser.push(obj[i]);	
 					};
-				};
-			}; res.send({complete: autoUser});
+				};res.send({complete: autoUser});
+		};
 		};
 	});
 });
