@@ -91,16 +91,18 @@ app.post('/searchresult', function (req,res){
 				if ((name === obj[i].firstname) || (name === obj[i].lastname)) {
 					var result = obj[i];
 				} 
-			}; res.render('searchresult', {match: result}) 
+			}; res.render('searchresult', {match: result}); 
 		} else {
-			for (var i=0; i<obj.length; i++) {
-				var include = obj[i].firstname.includes(autoName);
-				var include2 = obj[i].lastname.includes(autoName)
-				if ((include === true) || (include2 === true)) {
-					autoUser.push(obj[i]);
-				} else {
-					
-				}
+			if (autoName.length === 0) {
+				autoUser = [];
+			} else {
+				for (var i=0; i<obj.length; i++) {
+					var include = obj[i].firstname.includes(autoName);
+					var include2 = obj[i].lastname.includes(autoName)
+					if ((include === true) || (include2 === true)) {
+						autoUser.push(obj[i]);	
+					};
+				};
 			}; res.send({complete: autoUser});
 		};
 	});

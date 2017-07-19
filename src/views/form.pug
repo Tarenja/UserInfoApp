@@ -13,8 +13,11 @@ block content
 		form(method='POST' action='/searchresult')
 			input(class='auto' type="text", name="name", placeholder="first or last name")
 			button.btn(type='submit') Search
+	br
+	br
+	br
 	ul.autoresult
-		li No users found yet! Start typing to search for users!
+		li Start typing to search for users!
 			
 	script.
 		//first I need to set it so that on each keyup in the form above a call is sent to compare if there is a name that has that letter (combination). 
@@ -24,15 +27,19 @@ block content
 			$('.auto').keyup(function () {
 				var letters = {autoname: $('.auto').val()};
 				$.post('/searchresult', letters, function(res) {
-					var completeName = res.complete;
-					var names = "";
-					for (var i=0; i<completeName.length; i++) {
-						names = names += ('<br>' + completeName[i].firstname + " " + completeName[i].lastname);
-						console.log(names);
-						$('.autoresult').html('<li>'+names+'</li>');
+					console.log(res.complete);
+					if (res.complete.length === 0) {
+						$('.autoresult').html("<li> No users found!</li>");
+					} else {
+						var completeName = res.complete;
+						var names = "";
+						for (var i=0; i<completeName.length; i++) {
+							names = names += ('<br>' + completeName[i].firstname + " " + completeName[i].lastname);
+							//- console.log(names);
+							$('.autoresult').html('<li>'+names+'</li>');
+							};
+					};
 
-					if (letters === {})
-						$('.autoresult').html("<li> No users found yet! Start typing to search for users!</li>");
-				};
+				});
 			});
 		});
