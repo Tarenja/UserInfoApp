@@ -56,18 +56,18 @@ app.get('/', function(req, res){
 
 //user page which lists all of the users in the json file by reading and parsing it
 app.get('/users', function (req, res) {
-	var obj;	
+	var obj;
 
-	fs.readFile("../users.json", 'utf8', function (err, data) {		
+	fs.readFile("../users.json", 'utf8', function (err, data) {
 		if (err) {
-			throw err;					
-		} 
+			throw err;
+		}
 		var obj = JSON.parse(data);
-	
+
 		res.render('users', {
 			title: 'List of Users',
 			users: obj,
-		});	
+		});
 	});
 });
 
@@ -77,34 +77,33 @@ app.get('/users', function (req, res) {
 app.post('/searchresult', function (req,res){
 	// console.log(req.body);
 	var name = req.body.name;
-	var autoName = req.body.autoname;
+	var autoName = req.body.autoname.toLowerCase();
 	var autoUser = [];
 
-	fs.readFile("../users.json", 'utf8', function (err, data) {		
+	fs.readFile("../users.json", 'utf8', function (err, data) {
 		if (err) {
-			throw err;					
-		} 
+			throw err;
+		}
 		var obj = JSON.parse(data);
 
-		if (name) {
+		if (autoName.length === 0) {
+						autoUser = [];
+		} else if (name) {
 			for (var i=0; i<obj.length; i++) {
 				if ((name === obj[i].firstname) || (name === obj[i].lastname)) {
 					var result = obj[i];
-				} 
-			}; res.render('searchresult', {match: result}); 
+				}
+			}; res.render('searchresult', {match: result});
 		} else {
-			if (autoName.length === 0) {
-				autoUser = [];
-			} else {
 				for (var i=0; i<obj.length; i++) {
-					var include = obj[i].firstname.includes(autoName);
-					var include2 = obj[i].lastname.includes(autoName)
+					var include = obj[i].firstname.toLowerCase().includes(autoName);
+					var include2 = obj[i].lastname.toLowerCase().includes(autoName)
 					if ((include === true) || (include2 === true)) {
-						autoUser.push(obj[i]);	
+						autoUser.push(obj[i]);
 					};
-				};res.send({complete: autoUser});
+				};
 		};
-		};
+      res.send({complete: autoUser});
 	});
 });
 
@@ -117,23 +116,23 @@ app.get('/adduser', function (req,res) {
 //then change the file back into a json file, then redirecting to the users page to show the new user added
 app.post('/addusers', function (req,res) {
 
-	fs.readFile("../users.json", 'utf8', function (err, data) {		
+	fs.readFile("../users.json", 'utf8', function (err, data) {
 		if (err) {
-			throw err;					
-		} 
+			throw err;
+		}
 		var json = JSON.parse(data);
 		json.push({
-			firstname: req.body.firstname, 
+			firstname: req.body.firstname,
 			lastname: req.body.lastname,
 			email: req.body.email
 		})
-		fs.writeFile("../users.json", JSON.stringify(json), function (err, data) {		
+		fs.writeFile("../users.json", JSON.stringify(json), function (err, data) {
 		if (err) {
-			throw err;					
+			throw err;
 		} else {
 			console.log("User added")
-		}	
-	}); 
+		}
+	});
 	res.redirect('/users');
 	});
 });

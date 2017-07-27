@@ -6,7 +6,6 @@ block content
 	br
 	h3 Search for Users by first name or last name
 	br
-	h4 This is case sensitive!
 	p If you enter a full first or last name you can click submit and view the full details of that user
 	br 
 	div
@@ -20,9 +19,11 @@ block content
 		p Start typing to search for users!
 			
 	script.
-		//first I need to set it so that on each keyup in the form above a call is sent to compare if there is a name that has that letter (combination). 
-		//On each keyup it needs to send a request to the app.js to compare to the names in the JSON file, 
-		//which then needs to send the response back to the pug here to display or not in the div.autoresult which is currently empty
+		//- first I need to set it so that on each keyup in the form above a call is sent to compare if there is a name that has that letter (combination). 
+		//- On each keyup it needs to send a request to the app.js to compare to the names in the JSON file, 
+		//- which then needs to send the response back to the pug here to display or not in the div.autoresult which is currently empty
+		//- I am logging date.now twice to show that the timeout is taking 300 ms from the keyup to the request hitting the server, as per the assignment.
+		//- This would otherwise not really be visible
 		$( document ).ready(function() {
 			$('.auto').keyup(function () {
 				var startTime = Date.now();
@@ -47,5 +48,3 @@ block content
 				},300)	
 			});
 		});	
-		
-	
