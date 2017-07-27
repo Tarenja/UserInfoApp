@@ -103,7 +103,7 @@ app.post('/searchresult', function (req,res){
 					};
 				};
 		};
-			res.send({complete: autoUser});
+      res.send({complete: autoUser});
 	});
 });
 
